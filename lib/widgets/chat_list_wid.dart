@@ -56,7 +56,7 @@ class ChatListAndCallWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             iconWidget,
-            AppUtils.sizedBox(0.0, 4.0),
+            AppUtilsChats.sizedBox(0.0, 4.0),
             Flexible(
               child: Text(
                 msgOrCallTime,

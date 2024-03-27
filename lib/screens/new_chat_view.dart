@@ -1,10 +1,6 @@
 import 'dart:io';
 
 import 'package:chatcy/controllers/provider/chat_view_provider.dart';
-import 'package:chatcy/controllers/services/audio_video_call/audio_call_screen.dart';
-import 'package:chatcy/controllers/services/audio_video_call/call_service.dart';
-import 'package:chatcy/controllers/services/audio_video_call/dial_call_util.dart';
-import 'package:chatcy/controllers/services/audio_video_call/vdieo_call_screen.dart';
 import 'package:chatcy/controllers/services/firebase_helper_method.dart';
 import 'package:chatcy/model/call_make_model.dart';
 import 'package:chatcy/widgets/audio_slider_widget.dart';
@@ -71,135 +67,211 @@ class _NewChatViewState extends State<NewChatView> {
         Provider.of<ChatViewProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
-      appBar: AppUtils.showWidgetSta(
-        audioCall: () async {
-          bool isNetOn = await chatProvider.hasNetwork();
-          if (isNetOn) {
-            String id = FirebaseHelper.getRandomString(4);
-            CallUtils.dialAudio(
-                isCallPick: false,
-                callId: id,
-                callType: "audio",
-                // context: context,
-                from: {
-                  "uid": chatProvider.userInfo!.userId,
-                  "name": chatProvider.userInfo!.name,
-                  "picURL": chatProvider.userInfo!.imageUrl,
-                },
-                to: {
-                  "uid": widget.userID,
-                  "name": widget.userName.toString(),
-                  "picURL": widget.profileUrl,
-                }).then((value) {
-              var idCall = FirebaseHelper.getRandomString(6);
-              CallMakeModel callMake = CallMakeModel(
-                  callId: idCall,
-                  myName: chatProvider.userInfo!.name,
-                  myPic: chatProvider.userInfo!.imageUrl,
-                  myUid: chatProvider.userInfo!.userId,
-                  dateTime: DateTime.now(),
-                  recPic: widget.profileUrl,
-                  recName: widget.userName.toString(),
-                  recUid: widget.userID,
-                  isMissed: true,
-                  isCut: false,
-                  isRec: false,
-                  callType: "audio");
-              FirebaseHelper.sendHistory(
-                  callMake, chatProvider.callHistoryDocId!);
-              FirebaseHelper.sendMessageNotify(
-                  senderName: widget.userName,
-                  msg: "Missed Audio Call",
-                  chatRoom: widget.chatRoom!,
-                  userID: widget.userID,
-                  image: '',
-                  voice: '');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CallPageAudio(
-                    onCallCut: () async {
-                      await CallMethods.endCallSignleChat(
-                          callId: chatProvider.userInfo!.userId.toString(),
-                          recID: widget.userID);
-                    },
-                    callID: id,
-                    userID: chatProvider.userInfo!.userId!,
-                    userName: chatProvider.userInfo!.name!,
-                  ),
-                ),
-              );
-            });
-          } else {
-            AppUtils.internetDialog(context);
-          }
-        },
-        videoCall: () async {
-          bool isNetOn = await chatProvider.hasNetwork();
-          if (isNetOn) {
-            String id = FirebaseHelper.getRandomString(4);
-            CallUtils.dialAudio(
-                isCallPick: false,
-                callId: id,
-                callType: "video",
-                // context: context,
-                from: {
-                  "uid": chatProvider.userInfo!.userId,
-                  "name": chatProvider.userInfo!.name,
-                  "picURL": chatProvider.userInfo!.imageUrl,
-                },
-                to: {
-                  "uid": widget.userID,
-                  "name": widget.userName.toString(),
-                  "picURL": widget.profileUrl,
-                }).then((value) {
-              var idCall = FirebaseHelper.getRandomString(6);
-              CallMakeModel callMake = CallMakeModel(
-                  callId: idCall,
-                  myName: chatProvider.userInfo!.name,
-                  myPic: chatProvider.userInfo!.imageUrl,
-                  myUid: chatProvider.userInfo!.userId,
-                  dateTime: DateTime.now(),
-                  recPic: widget.profileUrl,
-                  recName: widget.userName.toString(),
-                  recUid: widget.userID,
-                  isMissed: false,
-                  isCut: false,
-                  isRec: false,
-                  callType: "vidoe");
-              FirebaseHelper.sendHistory(
-                  callMake, chatProvider.callHistoryDocId!);
-              FirebaseHelper.sendMessageNotify(
-                  senderName: widget.userName,
-                  msg: "Missed Video Call",
-                  chatRoom: widget.chatRoom!,
-                  userID: widget.userID,
-                  image: '',
-                  voice: '');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CallPageVideo(
-                    onCallCut: () async {
-                      await CallMethods.endCallSignleChat(
-                          callId: chatProvider.userInfo!.userId.toString(),
-                          recID: widget.userID);
-                    },
-                    callID: id,
-                    userID: chatProvider.userInfo!.userId!,
-                    userName: chatProvider.userInfo!.name!,
-                  ),
-                ),
-              );
-            });
-          } else {
-            AppUtils.internetDialog(context);
-          }
-        },
+      appBar: AppUtilsChats.showWidgetSta(
+        userId: widget.userID,
+        // audioCall: () async {
+        //   bool isNetOn = await chatProvider.hasNetwork();
+        //   if (isNetOn) {
+        //     String id = FirebaseHelper.getRandomString(4);
+        //     CallUtils.dialAudio(
+        //         isCallPick: false,
+        //         callId: id,
+        //         callType: "audio",
+        //         // context: context,
+        //         from: {
+        //           "uid": chatProvider.userInfo!.userId,
+        //           "name": chatProvider.userInfo!.name,
+        //           "picURL": chatProvider.userInfo!.imageUrl,
+        //         },
+        //         to: {
+        //           "uid": widget.userID,
+        //           "name": widget.userName.toString(),
+        //           "picURL": widget.profileUrl,
+        //         }).then((value) {
+        //       var idCall = FirebaseHelper.getRandomString(6);
+        //       CallMakeModel callMake = CallMakeModel(
+        //           callId: idCall,
+        //           myName: chatProvider.userInfo!.name,
+        //           myPic: chatProvider.userInfo!.imageUrl,
+        //           myUid: chatProvider.userInfo!.userId,
+        //           dateTime: DateTime.now(),
+        //           recPic: widget.profileUrl,
+        //           recName: widget.userName.toString(),
+        //           recUid: widget.userID,
+        //           isMissed: true,
+        //           isCut: false,
+        //           isRec: false,
+        //           callType: "audio");
+        //       FirebaseHelper.sendHistory(
+        //           callMake, chatProvider.callHistoryDocId!);
+        //       FirebaseHelper.sendMessageNotify(
+        //           senderName: chatProvider.userInfo!.name.toString(),
+        //           msg: "Missed Audio Call",
+        //           chatRoom: widget.chatRoom!,
+        //           userID: widget.userID,
+        //           image: '',
+        //           voice: '');
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (_) => CallPageAudio(
+        //             onCallCut: () async {
+        //               await CallMethods.endCallSignleChat(
+        //                   callId: chatProvider.userInfo!.userId.toString(),
+        //                   recID: widget.userID);
+        //             },
+        //             callID: id,
+        //             userID: chatProvider.userInfo!.userId!,
+        //             userName: chatProvider.userInfo!.name!,
+        //           ),
+        //         ),
+        //       );
+        //     });
+        //   } else {
+        //     AppUtilsChats.internetDialog(context);
+        //   }
+        // },
+        // videoCall: () async {
+        //   bool isNetOn = await chatProvider.hasNetwork();
+        //   if (isNetOn) {
+        //     String id = FirebaseHelper.getRandomString(4);
+        //     CallUtils.dialAudio(
+        //         isCallPick: false,
+        //         callId: id,
+        //         callType: "video",
+        //         // context: context,
+        //         from: {
+        //           "uid": chatProvider.userInfo!.userId,
+        //           "name": chatProvider.userInfo!.name,
+        //           "picURL": chatProvider.userInfo!.imageUrl,
+        //         },
+        //         to: {
+        //           "uid": widget.userID,
+        //           "name": widget.userName.toString(),
+        //           "picURL": widget.profileUrl,
+        //         }).then((value) {
+        //       var idCall = FirebaseHelper.getRandomString(6);
+        //       CallMakeModel callMake = CallMakeModel(
+        //           callId: idCall,
+        //           myName: chatProvider.userInfo!.name,
+        //           myPic: chatProvider.userInfo!.imageUrl,
+        //           myUid: chatProvider.userInfo!.userId,
+        //           dateTime: DateTime.now(),
+        //           recPic: widget.profileUrl,
+        //           recName: widget.userName.toString(),
+        //           recUid: widget.userID,
+        //           isMissed: false,
+        //           isCut: false,
+        //           isRec: false,
+        //           callType: "video");
+        //       chatProvider.callHisoryId();
+        //       FirebaseHelper.sendHistory(
+        //           callMake, chatProvider.callHistoryDocId!);
+        //       FirebaseHelper.sendMessageNotify(
+        //           senderName: chatProvider.userInfo!.name.toString(),
+        //           msg: "Missed Video Call",
+        //           chatRoom: widget.chatRoom!,
+        //           userID: widget.userID,
+        //           image: '',
+        //           voice: '');
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (_) => CallPageVideo(
+        //             onCallCut: () async {
+        //               await CallMethods.endCallSignleChat(
+        //                   callId: chatProvider.userInfo!.userId.toString(),
+        //                   recID: widget.userID);
+        //             },
+        //             callID: id,
+        //             userID: chatProvider.userInfo!.userId!,
+        //             userName: chatProvider.userInfo!.name!,
+        //           ),
+        //         ),
+        //       );
+        //     });
+        //   } else {
+        //     AppUtilsChats.internetDialog(context);
+        //   }
+        // },
         urlImage: widget.profileUrl.toString(),
         name: widget.userName.toString(),
         roomId: widget.chatRoom!.chatRoomId!,
         status: widget.showStatus.toString(),
+        audioCall: (String, Stringl, List<String> n) async {
+          // print('user id');
+          // print(widget.userID);
+          // print(widget.userName);
+          // ZegoSendCallInvitationButton(
+          //     isVideoCall: true,
+          //     resourceID:
+          //         "my_call_cloud", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+          //     invitees: [
+          //       ZegoUIKitUser(
+          //         id: widget.userID,
+          //         name: widget.userName,
+          //       ),
+          //     ]);
+          // FirebaseHelper.actionButton(
+          //     isVideo: false,
+          //     targetUid: widget.userID,
+          //     targetName: widget.userName);
+          ///call make model
+          bool isNetOn = await chatProvider.hasNetwork();
+          if (isNetOn) {
+            var idCall = FirebaseHelper.getRandomString(6);
+            CallMakeModel callMake = CallMakeModel(
+                callId: idCall,
+                myName: chatProvider.userInfo!.name,
+                myPic: chatProvider.userInfo!.imageUrl,
+                myUid: chatProvider.userInfo!.userId,
+                dateTime: DateTime.now(),
+                recPic: widget.profileUrl,
+                recName: widget.userName.toString(),
+                recUid: widget.userID,
+                isMissed: true,
+                isCut: false,
+                isRec: false,
+                callType: "audio");
+            FirebaseHelper.sendHistory(
+                callMake, chatProvider.callHistoryDocId!);
+            FirebaseHelper.sendMessageNotify(
+                senderName: chatProvider.userInfo!.name.toString(),
+                msg: "Missed Audio Call....",
+                chatRoom: widget.chatRoom!,
+                userID: widget.userID,
+                image: '',
+                voice: '');
+          }
+        },
+        videoCall: (String, Stringl, List<String> n) async {
+          bool isNetOn = await chatProvider.hasNetwork();
+          if (isNetOn) {
+            var idCall = FirebaseHelper.getRandomString(6);
+            CallMakeModel callMake = CallMakeModel(
+                callId: idCall,
+                myName: chatProvider.userInfo!.name,
+                myPic: chatProvider.userInfo!.imageUrl,
+                myUid: chatProvider.userInfo!.userId,
+                dateTime: DateTime.now(),
+                recPic: widget.profileUrl,
+                recName: widget.userName.toString(),
+                recUid: widget.userID,
+                isMissed: true,
+                isCut: false,
+                isRec: false,
+                callType: "audio");
+            FirebaseHelper.sendHistory(
+                callMake, chatProvider.callHistoryDocId!);
+            FirebaseHelper.sendMessageNotify(
+                senderName: chatProvider.userInfo!.name.toString(),
+                msg: "Missed Vidoe Call....",
+                chatRoom: widget.chatRoom!,
+                userID: widget.userID,
+                image: '',
+                voice: '');
+          }
+        },
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -270,16 +342,15 @@ class _NewChatViewState extends State<NewChatView> {
                                                   (messageMod.imageText == null ||
                                                       messageMod
                                                           .imageText!.isEmpty)
-                                              ? AppUtils.textBox(
+                                              ? AppUtilsChats.textBox(
                                                   messageMod, uid, context)
                                               : messageMod.image!.isNotEmpty
                                                   ? ShowImageContainerTextWid(
                                                       uid: uid,
                                                       messageMod: messageMod,
-                                                      sendTime: AppUtils
-                                                          .firebaseTimestampSingleMsg(
-                                                              messageMod
-                                                                  .creation!),
+                                                      sendTime: AppUtilsChats
+                                                          .firebaseTimestampSingleMsg(messageMod
+                                                              .creation!),
                                                       imageHol:
                                                           messageMod.image!,
                                                       imageTap: () {
@@ -313,23 +384,25 @@ class _NewChatViewState extends State<NewChatView> {
                                                           uid,
                                                           messageMod,
                                                           messageMod.voice!,
-                                                          AppUtils.firebaseTimestampSingleMsg(
+                                                          AppUtilsChats.firebaseTimestampSingleMsg(
                                                               messageMod.creation!))
                                                       : const SizedBox(),
-                                          AppUtils.sizedBox(4.0, 0.0),
+                                          AppUtilsChats.sizedBox(4.0, 0.0),
                                           if (index == 0)
                                             Obx(() {
                                               return imageCon.isImgSend.value
-                                                  ? AppUtils.imageLoader(
+                                                  ? AppUtilsChats.imageLoader(
                                                       imageCon.imgPath.value)
-                                                  : AppUtils.sizedBox(0.0, 0.0);
+                                                  : AppUtilsChats.sizedBox(
+                                                      0.0, 0.0);
                                             }),
                                           if (index == 0)
                                             Obx(() {
                                               return imageCon.isVoiceSend.value
-                                                  ? AppUtils.voiceLoader(
+                                                  ? AppUtilsChats.voiceLoader(
                                                       context: context)
-                                                  : AppUtils.sizedBox(0.0, 0.0);
+                                                  : AppUtilsChats.sizedBox(
+                                                      0.0, 0.0);
                                             }),
                                           (messageMod.image == null ||
                                                       messageMod
@@ -348,7 +421,7 @@ class _NewChatViewState extends State<NewChatView> {
                                                   child: Row(
                                                     children: [
                                                       Text(
-                                                        AppUtils
+                                                        AppUtilsChats
                                                             .firebaseTimestampSingleMsg(
                                                                 messageMod
                                                                     .creation!),
@@ -373,8 +446,9 @@ class _NewChatViewState extends State<NewChatView> {
                                                                   Colors.blue,
                                                               size: 12,
                                                             )
-                                                          : AppUtils.sizedBox(
-                                                              0.0, 0.0)
+                                                          : AppUtilsChats
+                                                              .sizedBox(
+                                                                  0.0, 0.0)
                                                     ],
                                                   ),
                                                 )
@@ -419,7 +493,7 @@ class _NewChatViewState extends State<NewChatView> {
               int count1 = count + 1;
               if (widget.chatRoom!.toId == uid) {
                 FirebaseHelper.sendMessage(
-                    senderName: widget.userName,
+                    senderName: chatProvider.userInfo!.name.toString(),
                     message: message,
                     chatRoom: widget.chatRoom!,
                     userID: widget.userID,
@@ -428,7 +502,7 @@ class _NewChatViewState extends State<NewChatView> {
                 int count = chatProvider.countChk!;
                 int increseCount = count + 1;
                 FirebaseHelper.sendMessage(
-                    senderName: widget.userName,
+                    senderName: chatProvider.userInfo!.name.toString(),
                     message: message,
                     chatRoom: widget.chatRoom!,
                     userID: widget.userID,
@@ -442,6 +516,7 @@ class _NewChatViewState extends State<NewChatView> {
                   .child("chatImages/${DateTime.now().toIso8601String()}");
               imageCon.imgPath.value = '';
               messageImageCon.clear();
+
               await [
                 Permission.photos,
                 Permission.storage,
@@ -465,7 +540,7 @@ class _NewChatViewState extends State<NewChatView> {
                       int count1 = count + 1;
                       if (widget.chatRoom!.toId == uid) {
                         FirebaseHelper.sendImage(
-                            senderName: widget.userName,
+                            senderName: chatProvider.userInfo!.name.toString(),
                             imagePath: profileDown,
                             text: messageImageCon.text.isEmpty
                                 ? ""
@@ -477,7 +552,7 @@ class _NewChatViewState extends State<NewChatView> {
                         int count = chatProvider.countChk!;
                         int increseCount = count + 1;
                         FirebaseHelper.sendImage(
-                            senderName: widget.userName,
+                            senderName: chatProvider.userInfo!.name.toString(),
                             imagePath: profileDown,
                             text: messageImageCon.text.isEmpty
                                 ? ""
@@ -536,7 +611,7 @@ class _NewChatViewState extends State<NewChatView> {
                 // await sendVoice(profileDown);
                 if (widget.chatRoom!.toId == uid) {
                   FirebaseHelper.sendVoice(
-                      senderName: widget.userName,
+                      senderName: chatProvider.userInfo!.name.toString(),
                       voicePath: profileDown,
                       chatRoom: widget.chatRoom!,
                       userID: widget.userID,
@@ -545,7 +620,7 @@ class _NewChatViewState extends State<NewChatView> {
                   int count = chatProvider.countChk!;
                   int increseCount = count + 1;
                   FirebaseHelper.sendVoice(
-                      senderName: widget.userName,
+                      senderName: chatProvider.userInfo!.name.toString(),
                       voicePath: profileDown,
                       chatRoom: widget.chatRoom!,
                       userID: widget.userID,
@@ -562,7 +637,7 @@ class _NewChatViewState extends State<NewChatView> {
                 ? ShowEmojiKeyBoard(
                     controller: message,
                   )
-                : AppUtils.sizedBox(0.0, 0.0);
+                : AppUtilsChats.sizedBox(0.0, 0.0);
           })
         ],
       ),

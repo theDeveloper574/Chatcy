@@ -141,8 +141,8 @@ class _ContactViewState extends State<ContactView> {
                               }
                             }
                           },
-                          videoCallWid: AppUtils.sizedBox(0.0, 0.0),
-                          audioCallWid: AppUtils.sizedBox(0.0, 0.0),
+                          videoCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
+                          audioCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
                           imageProvider: Padding(
                             padding: const EdgeInsets.only(left: 14.0),
                             child: CircleAvatar(

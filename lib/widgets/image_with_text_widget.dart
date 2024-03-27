@@ -118,7 +118,7 @@ class ShowImageContainerTextWid extends StatelessWidget {
                         style:
                             const TextStyle(color: Colors.grey, fontSize: 10),
                       ),
-                      AppUtils.sizedBox(0.0, 4.0),
+                      AppUtilsChats.sizedBox(0.0, 4.0),
                       (messageMod.sender == uid)
                           ? const Icon(
                               Icons.done_all_sharp,

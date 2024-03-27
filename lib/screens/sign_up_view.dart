@@ -80,34 +80,36 @@ class _SignUpViewState extends State<SignUpView> {
               );
             }),
             // Image.asset('asset/signup.png'),
-            AppUtils.sizedBox(40, 0),
+            AppUtilsChats.sizedBox(40, 0),
             //name controller
             TextFormField(
               cursorColor: AppColors.defaultColor,
               controller: name,
               keyboardType: TextInputType.name,
-              decoration: AppUtils.decoration(
-                  hintTe: "Enter Name", widget: AppUtils.sizedBox(0.0, 0.0)),
+              decoration: AppUtilsChats.decoration(
+                  hintTe: "Enter Name",
+                  widget: AppUtilsChats.sizedBox(0.0, 0.0)),
               textInputAction: TextInputAction.next,
             ),
             //email controller
-            AppUtils.sizedBox(8, 0),
+            AppUtilsChats.sizedBox(8, 0),
             TextFormField(
               cursorColor: AppColors.defaultColor,
               controller: email,
               keyboardType: TextInputType.emailAddress,
-              decoration: AppUtils.decoration(
-                  hintTe: "Enter Email", widget: AppUtils.sizedBox(0.0, 0.0)),
+              decoration: AppUtilsChats.decoration(
+                  hintTe: "Enter Email",
+                  widget: AppUtilsChats.sizedBox(0.0, 0.0)),
               textInputAction: TextInputAction.next,
             ),
             //password controller
-            AppUtils.sizedBox(8, 0),
+            AppUtilsChats.sizedBox(8, 0),
             Obx(() {
               return TextFormField(
                 obscureText: pathCon.isSignUPSeen.value,
                 cursorColor: AppColors.defaultColor,
                 controller: password,
-                decoration: AppUtils.decoration(
+                decoration: AppUtilsChats.decoration(
                   hintTe: "Enter Password",
                   widget: GestureDetector(
                     onTap: () {
@@ -129,7 +131,7 @@ class _SignUpViewState extends State<SignUpView> {
               );
             }),
             //submit button
-            AppUtils.sizedBox(18, 0),
+            AppUtilsChats.sizedBox(18, 0),
             Obx(() {
               return ButtonCompo(
                 isLoading: pathCon.isLoad.value,
@@ -139,7 +141,7 @@ class _SignUpViewState extends State<SignUpView> {
                 buttonName: "Sign Up",
               );
             }),
-            AppUtils.sizedBox(6, 0),
+            AppUtilsChats.sizedBox(6, 0),
             CheckAccountCompo(
               onTap: () {
                 Navigator.pushNamed(context, RouteName.logIn);
@@ -155,19 +157,20 @@ class _SignUpViewState extends State<SignUpView> {
 
   Future<void> submitform() async {
     if (name.text.isEmpty) {
-      AppUtils.showFlushBar(context, "Please Enter Name");
+      AppUtilsChats.showFlushBar(context, "Please Enter Name");
     } else if (email.text.isEmpty) {
-      AppUtils.showFlushBar(context, "Please Enter Email");
+      AppUtilsChats.showFlushBar(context, "Please Enter Email");
     } else if (!email.text.contains("@")) {
-      AppUtils.showFlushBar(context, "Please Enter Valid Email");
+      AppUtilsChats.showFlushBar(context, "Please Enter Valid Email");
     } else if (!email.text.contains(".")) {
-      AppUtils.showFlushBar(context, "Please Enter Valid Email");
+      AppUtilsChats.showFlushBar(context, "Please Enter Valid Email");
     } else if (password.text.isEmpty) {
-      AppUtils.showFlushBar(context, "Please Enter Password");
+      AppUtilsChats.showFlushBar(context, "Please Enter Password");
     } else if (password.text.length < 6) {
-      AppUtils.showFlushBar(context, "Password Cannot Be Less Than Six Digit");
+      AppUtilsChats.showFlushBar(
+          context, "Password Cannot Be Less Than Six Digit");
     } else if (pathCon.imagePath.isEmpty) {
-      AppUtils.showFlushBar(context, "Please Enter Profile Image");
+      AppUtilsChats.showFlushBar(context, "Please Enter Profile Image");
     } else {
       FocusScope.of(context).unfocus();
       final now = DateTime.now();

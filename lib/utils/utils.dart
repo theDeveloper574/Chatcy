@@ -16,10 +16,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 import '../res/colors.dart';
 
-class AppUtils {
+class AppUtilsChats {
   static const imageHolder =
       "https://images.pexels.com/photos/17077796/pexels-photo-17077796/free-photo-of-palazzo-pesaro-papafava-in-venice.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
 
@@ -61,7 +62,7 @@ class AppUtils {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppUtils.sizedBox(20.0, 0.0),
+              AppUtilsChats.sizedBox(20.0, 0.0),
               Text(
                 addText,
                 style:
@@ -75,20 +76,20 @@ class AppUtils {
                 maxLength: maxLength,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 cursorColor: AppColors.defaultColor,
-                decoration: AppUtils.bottomSheetDecoration(),
+                decoration: AppUtilsChats.bottomSheetDecoration(),
               ),
-              AppUtils.sizedBox(8.0, 0.0),
+              AppUtilsChats.sizedBox(8.0, 0.0),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  AppUtils.bottomText(
+                  AppUtilsChats.bottomText(
                       onTap: () {
                         Navigator.pop(context);
                       },
                       text: 'cancel'),
-                  AppUtils.sizedBox(0.0, 20),
-                  AppUtils.bottomText(onTap: onSave, text: 'save'),
+                  AppUtilsChats.sizedBox(0.0, 20),
+                  AppUtilsChats.bottomText(onTap: onSave, text: 'save'),
                 ],
               )
             ],
@@ -268,7 +269,7 @@ class AppUtils {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AppUtils.sizedBox(0.0, 4),
+          AppUtilsChats.sizedBox(0.0, 4),
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: const Icon(
@@ -276,7 +277,7 @@ class AppUtils {
               color: Colors.black,
             ),
           ),
-          AppUtils.sizedBox(0.0, 8),
+          AppUtilsChats.sizedBox(0.0, 8),
           CircleAvatar(
             radius: 20,
             // backgroundColor: HexColor(widget.chatColor).withOpacity(0.9),
@@ -290,7 +291,7 @@ class AppUtils {
               ),
             ),
           ),
-          AppUtils.sizedBox(0.0, 10),
+          AppUtilsChats.sizedBox(0.0, 10),
           Expanded(
             child: InkWell(
               onTap: profileTap,
@@ -305,7 +306,7 @@ class AppUtils {
                         textStyle:
                             const TextStyle(color: Colors.black, fontSize: 16)),
                   ),
-                  AppUtils.sizedBox(5.0, 0.0),
+                  AppUtilsChats.sizedBox(5.0, 0.0),
                   Text(showStatus,
                       style: const TextStyle(
                         color: Colors.black87,
@@ -327,12 +328,12 @@ class AppUtils {
             InkWell(
                 onTap: onCallTap,
                 child: const Icon(Icons.call_outlined, color: Colors.black)),
-            AppUtils.sizedBox(0.0, 12.0),
+            AppUtilsChats.sizedBox(0.0, 12.0),
             InkWell(
                 onTap: onVideoTap,
                 child:
                     const Icon(Icons.videocam_outlined, color: Colors.black)),
-            AppUtils.sizedBox(0.0, 0.0),
+            AppUtilsChats.sizedBox(0.0, 0.0),
             onUpMenuBut,
           ],
         )
@@ -626,7 +627,7 @@ class AppUtils {
               color: AppColors.whiteColor,
             ),
           ),
-          AppUtils.sizedBox(4.0, 0.0),
+          AppUtilsChats.sizedBox(4.0, 0.0),
           Text(
             "Uploading...",
             style: TextStyle(color: AppColors.whiteColor),
@@ -832,7 +833,7 @@ class AppUtils {
               color: Colors.black,
               size: 22,
             )),
-        AppUtils.sizedBox(0.0, 24.0),
+        AppUtilsChats.sizedBox(0.0, 24.0),
         InkWell(
             onTap: onDel,
             child: const Icon(
@@ -840,39 +841,14 @@ class AppUtils {
               color: Colors.black,
               size: 24,
             )),
-        AppUtils.sizedBox(0.0, 14.0),
+        AppUtilsChats.sizedBox(0.0, 14.0),
         InkWell(
             onTap: onForward,
             child: Image.asset(
               "asset/forword_Icon.png",
               scale: 18.2,
             )),
-        AppUtils.sizedBox(0.0, 20.0),
-      ],
-    );
-  }
-
-  static Widget showRowCall(
-      {required Function() audioCall, required Function() videoCall}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        InkWell(
-            onTap: audioCall,
-            child: const Icon(
-              Icons.call_outlined,
-              color: Colors.black,
-              size: 24,
-            )),
-        AppUtils.sizedBox(0.0, 26.0),
-        InkWell(
-            onTap: videoCall,
-            child: const Icon(
-              Icons.videocam_outlined,
-              color: Colors.black,
-              size: 24,
-            )),
-        AppUtils.sizedBox(0.0, 24.0),
+        AppUtilsChats.sizedBox(0.0, 20.0),
       ],
     );
   }
@@ -883,10 +859,11 @@ class AppUtils {
       required String name,
       required String status,
       required String roomId,
-      required Function() audioCall,
-      required Function() videoCall}) {
+      required String userId,
+      required Function(String, String f, List<String> n) audioCall,
+      required Function(String, String f, List<String> n) videoCall}) {
     return AppBar(
-      toolbarHeight: 60,
+      toolbarHeight: 70,
       elevation: 0.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       automaticallyImplyLeading: false,
@@ -898,7 +875,7 @@ class AppUtils {
           return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AppUtils.sizedBox(0.0, 4),
+              AppUtilsChats.sizedBox(0.0, 4),
               GestureDetector(
                 onTap: () {
                   if (valueLis.onTapList.isEmpty) {
@@ -914,7 +891,7 @@ class AppUtils {
                   color: Colors.black,
                 ),
               ),
-              AppUtils.sizedBox(0.0, 8),
+              AppUtilsChats.sizedBox(0.0, 8),
               valueLis.onTapList.isNotEmpty
                   ? const SizedBox()
                   : CircleAvatar(
@@ -927,7 +904,7 @@ class AppUtils {
                         ),
                       ),
                     ),
-              AppUtils.sizedBox(0.0, 10),
+              AppUtilsChats.sizedBox(0.0, 10),
               valueLis.onTapList.isNotEmpty
                   ? Text(valueLis.onTapList.length.toString())
                   : Expanded(
@@ -948,7 +925,7 @@ class AppUtils {
                                     color: Colors.black, fontSize: 14),
                               ),
                             ),
-                            AppUtils.sizedBox(5.0, 0.0),
+                            AppUtilsChats.sizedBox(5.0, 0.0),
                             Text(
                               status,
                               style: const TextStyle(
@@ -971,9 +948,12 @@ class AppUtils {
         Consumer<ChatViewProvider>(
           builder: (context, valueLi, child) {
             return valueLi.onTapList.isEmpty
-                ? AppUtils.showRowCall(
-                    audioCall: audioCall, videoCall: videoCall)
-                : AppUtils.showForwodbutton(
+                ? AppUtilsChats.showRowCall(
+                    userID: userId,
+                    userName: name,
+                    onAudio: audioCall,
+                    onVideo: videoCall)
+                : AppUtilsChats.showForwodbutton(
                     onDel: () {
                       for (var i in valueLi.messagesIdLi) {
                         valueLi.deleteMessages(
@@ -995,14 +975,14 @@ class AppUtils {
                     },
                   );
           },
-        )
+        ),
       ],
     );
   }
 
   static Widget textBox(
       MessageModel messageMod, String uid, BuildContext context) {
-    return AppUtils.chatBox(
+    return AppUtilsChats.chatBox(
         forwardCheck: messageMod.isForward == true
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -1055,7 +1035,8 @@ class AppUtils {
                 ),
               ),
         message: messageMod.text.toString(),
-        messageTim: AppUtils.firebaseTimestampSingleMsg(messageMod.creation!),
+        messageTim:
+            AppUtilsChats.firebaseTimestampSingleMsg(messageMod.creation!),
         msgTextColor:
             (messageMod.sender == uid) ? AppColors.defaultColor : Colors.white,
         msgTimColor:
@@ -1066,7 +1047,7 @@ class AppUtils {
                 color: Colors.blue,
                 size: 12,
               )
-            : AppUtils.sizedBox(0.0, 0.0));
+            : AppUtilsChats.sizedBox(0.0, 0.0));
   }
 
   ///show internet dialog
@@ -1097,6 +1078,57 @@ class AppUtils {
           )
         ],
       ),
+    );
+  }
+
+  static Widget showRowCall({
+    required String userID,
+    required String userName,
+    required Function(String, String f, List<String> n) onVideo,
+    required Function(String, String f, List<String> n) onAudio,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ZegoSendCallInvitationButton(
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            iconSize: const Size(40, 40),
+            buttonSize: const Size(40, 40),
+            timeoutSeconds: 40,
+            isVideoCall: true,
+            onPressed: onAudio,
+            resourceID:
+                "my_call_cloud", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+            invitees: [
+              ZegoUIKitUser(
+                id: userID,
+                name: userName,
+              ),
+            ]),
+        const SizedBox(
+          width: 10.0,
+        ),
+        ZegoSendCallInvitationButton(
+            iconSize: const Size(40, 40),
+            buttonSize: const Size(40, 40),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            timeoutSeconds: 40,
+            isVideoCall: false,
+            onPressed: onVideo,
+            resourceID:
+                "my_call_cloud", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+            invitees: [
+              ZegoUIKitUser(
+                id: userID,
+                name: userName,
+              ),
+            ]),
+        const SizedBox(
+          width: 10.0,
+        ),
+      ],
     );
   }
 }

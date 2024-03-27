@@ -67,7 +67,7 @@ class _CallViewState extends State<CallView> {
                                   size: 18,
                                 ),
                           msgOrCallTime:
-                              AppUtils.callHistoryTime(callData.dateTime!),
+                              AppUtilsChats.callHistoryTime(callData.dateTime!),
                           userName: callData.recName!,
                           onTap: () {
                             // Navigator.of(context, rootNavigator: true)

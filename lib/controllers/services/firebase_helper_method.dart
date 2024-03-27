@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:chatcy/model/call_make_model.dart';
@@ -6,8 +7,11 @@ import 'package:chatcy/model/message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 import '../../model/user_data_model.dart';
+import '../provider/chat_view_provider.dart';
 import 'notification_service.dart';
 
 class FirebaseHelper {
@@ -110,7 +114,6 @@ class FirebaseHelper {
       chatRoom.fromMessagesCount = fromCount;
       await NotificationService.sendNotifi(
           title: msg, uid: userID, body: senderName);
-
       FirebaseFirestore.instance
           .collection("chatRooms")
           .doc(chatRoom.chatRoomId)
@@ -155,6 +158,8 @@ class FirebaseHelper {
     chatRoom.fromMessagesCount = fromCount;
     await NotificationService.sendNotifi(
         title: "Send You a voice..", uid: userID, body: senderName);
+    // await NotificationService.sendNotifi(
+    //     title: "Send You a voice..", uid: userID, body: senderName);
     await FirebaseFirestore.instance
         .collection("chatRooms")
         .doc(chatRoom.chatRoomId)
@@ -183,8 +188,10 @@ class FirebaseHelper {
         imageText: text,
         isForward: false,
         isFav: false);
-    NotificationService.sendNotifi(
+    await NotificationService.sendNotifi(
         title: "Send You a image..", uid: userID, body: senderName);
+    // NotificationService.sendNotifi(
+    //     title: "Send You a image..", uid: userID, body: senderName);
 
     await FirebaseFirestore.instance
         .collection("chatRooms")
@@ -279,12 +286,47 @@ class FirebaseHelper {
         .set(messageModel.toMap());
     chatRoom.lastMessage = msg;
     chatRoom.chatTime = DateTime.now();
-
     await NotificationService.sendNotifi(
         title: msg, uid: userID, body: senderName);
     FirebaseFirestore.instance
         .collection("chatRooms")
         .doc(chatRoom.chatRoomId)
         .set(chatRoom.toMap());
+  }
+
+  static void onUserLogin(String userName) {
+    /// 1.2.1. initialized ZegoUIKitPrebuiltCallInvitationService
+    /// when app's user is logged in or re-logged in
+    /// We recommend calling this method as soon as the user logs in to your app.
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: appId,
+      appSign: signInId,
+      userID: FirebaseAuth.instance.currentUser!.uid,
+      userName: userName,
+      plugins: [ZegoUIKitSignalingPlugin()],
+    );
+  }
+
+  //on call end
+  static void onUserLogout() {
+    /// 1.2.2. de-initialization ZegoUIKitPrebuiltCallInvitationService
+    /// when app's user is logged out
+    ZegoUIKitPrebuiltCallInvitationService().uninit();
+  }
+
+  static void actionButton(
+      {required bool isVideo,
+      required String targetUid,
+      required String targetName}) async {
+    ZegoSendCallInvitationButton(
+        isVideoCall: isVideo,
+        resourceID:
+            "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+        invitees: [
+          ZegoUIKitUser(
+            id: targetUid,
+            name: targetName,
+          ),
+        ]);
   }
 }

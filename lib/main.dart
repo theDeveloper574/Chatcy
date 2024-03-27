@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 import 'controllers/provider/call_his_load_more.dart';
 import 'controllers/provider/chat_view_provider.dart';
@@ -19,27 +20,47 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   NotificationService.initialize();
   FirebaseMessaging.onBackgroundMessage(NotificationService.backgroundHandler);
   // runApp(const MyApp());
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ChatViewProvider>(
-            create: (_) => ChatViewProvider()),
-        ChangeNotifierProvider<CallHisLoadMore>(
-            create: (_) => CallHisLoadMore()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
+  ZegoUIKit().initLog().then((value) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ChatViewProvider>(
+              create: (_) => ChatViewProvider()),
+          ChangeNotifierProvider<CallHisLoadMore>(
+              create: (_) => CallHisLoadMore()),
+        ],
+        child: MyApp(
+          navigatorKey: navigatorKey,
+        ),
+      ),
+    );
+  });
 }
+// runApp(
+//   MultiProvider(
+//     providers: [
+//       ChangeNotifierProvider<ChatViewProvider>(
+//           create: (_) => ChatViewProvider()),
+//       ChangeNotifierProvider<CallHisLoadMore>(
+//           create: (_) => CallHisLoadMore()),
+//     ],
+//     child: const MyApp(),
+//   ),
+// );
+// }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  const MyApp({super.key, required this.navigatorKey});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -47,11 +68,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
+
   @override
   void initState() {
-    FirebaseAuth.instance.currentUser != null
-        ? setStatus("online", FirebaseAuth.instance.currentUser!.uid)
-        : null;
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -79,8 +98,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      navigatorKey: navigatorKey,
-
+      navigatorKey: widget.navigatorKey,
       theme: ThemeData(
         fontFamily: 'roboto',
         appBarTheme: AppBarTheme(
@@ -90,10 +108,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ),
 
       ///default route
-      initialRoute: FirebaseAuth.instance.currentUser != null
-          ? RouteName.home
-          : RouteName.logIn,
-      // initialRoute: RouteName.home,
+      // home: FirebaseAuth.instance.currentUser != null
+      //     ? const LogInView()
+      //     : HomeView(),
+      initialRoute: RouteName.splash,
       onGenerateRoute: Routes.generateRoute,
     );
   }

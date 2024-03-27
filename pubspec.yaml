@@ -60,8 +60,7 @@ dependencies:
   path_provider: ^2.1.1
   grouped_list: ^5.1.2
   provider: ^6.1.2
-  zego_uikit_prebuilt_call: ^4.4.1
-  zego_uikit_signaling_plugin: ^2.7.6
+  zego_uikit_prebuilt_call: ^4.5.0
   flutter_local_notifications:
   firebase_messaging: ^14.7.19
   screenshot: ^2.1.0
@@ -73,6 +72,9 @@ dependencies:
   story_maker: ^1.0.5
   dio: ^5.4.1
   gradient_borders: ^1.0.0
+  zego_uikit_signaling_plugin: ^2.7.6
+  shared_preferences: ^2.2.2
+
 
 dev_dependencies:
   flutter_test:

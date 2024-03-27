@@ -10,6 +10,7 @@ import '../../screens/home_view.dart';
 import '../../screens/login_view.dart';
 import '../../screens/my_profile_view.dart';
 import '../../screens/sign_up_view.dart';
+import '../../screens/splash_view.dart';
 import '../../screens/user_profile_view.dart';
 
 class Routes {
@@ -40,6 +41,8 @@ class Routes {
       case RouteName.deleteStatus:
         return MaterialPageRoute(
             builder: (context) => const DeleteStatusView());
+      case RouteName.splash:
+        return MaterialPageRoute(builder: (context) => const SplashView());
       // case RouteName.newChatView:
       // return MaterialPageRoute(builder: (context) => const NewChatView());
       case RouteName.newChatViewNotifi:

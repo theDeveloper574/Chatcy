@@ -152,14 +152,14 @@ class ImageBeforeSend extends StatelessWidget {
         height: Get.height * 0.07,
         child: Row(
           children: [
-            AppUtils.sizedBox(0.0, 12.0),
+            AppUtilsChats.sizedBox(0.0, 12.0),
             Expanded(
               flex: 5,
               child: TextFormField(
                 controller: controller,
                 style: TextStyle(color: AppColors.whiteColor),
                 cursorColor: AppColors.whiteColor,
-                decoration: AppUtils.sendImageDecoration(),
+                decoration: AppUtilsChats.sendImageDecoration(),
               ),
             ),
             Expanded(

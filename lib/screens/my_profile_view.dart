@@ -82,7 +82,7 @@ class _MyProfileViewState extends State<MyProfileView> {
                     return Center(
                       child: Column(
                         children: [
-                          AppUtils.sizedBox(70.0, 0.0),
+                          AppUtilsChats.sizedBox(70.0, 0.0),
                           Hero(
                             tag: "show-profile-picture",
                             child: CircleImageWidget(
@@ -159,14 +159,14 @@ class _MyProfileViewState extends State<MyProfileView> {
                                       as ImageProvider,
                             ),
                           ),
-                          AppUtils.sizedBox(40.0, 0.0),
+                          AppUtilsChats.sizedBox(40.0, 0.0),
                           ProfileWidget(
                             imageProvider: const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
                               child: Icon(Icons.person),
                             ),
                             onListTap: () {
-                              AppUtils.setBottomSheet(
+                              AppUtilsChats.setBottomSheet(
                                   maxLength: 15,
                                   context: context,
                                   addText: "Enter your name",
@@ -202,7 +202,7 @@ class _MyProfileViewState extends State<MyProfileView> {
                               color: AppColors.defaultColor,
                               size: 22,
                             ),
-                            videoCallWid: AppUtils.sizedBox(0.0, 0.0),
+                            videoCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
                           ),
                           ProfileWidget(
                             imageProvider: const Padding(
@@ -210,7 +210,7 @@ class _MyProfileViewState extends State<MyProfileView> {
                               child: Icon(Icons.warning),
                             ),
                             onListTap: () {
-                              AppUtils.setBottomSheet(
+                              AppUtilsChats.setBottomSheet(
                                   maxLength: 40,
                                   context: context,
                                   addText: "Add about",
@@ -235,7 +235,7 @@ class _MyProfileViewState extends State<MyProfileView> {
                               color: AppColors.defaultColor,
                               size: 22,
                             ),
-                            videoCallWid: AppUtils.sizedBox(0.0, 0.0),
+                            videoCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
                           ),
                           ProfileWidget(
                             imageProvider: const Padding(
@@ -245,8 +245,8 @@ class _MyProfileViewState extends State<MyProfileView> {
                             onListTap: () {},
                             nameTitle: "Phone",
                             about: "+92 304 5070559",
-                            audioCallWid: AppUtils.sizedBox(0.0, 0.0),
-                            videoCallWid: AppUtils.sizedBox(0.0, 0.0),
+                            audioCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
+                            videoCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
                           ),
                         ],
                       ),

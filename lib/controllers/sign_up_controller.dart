@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:chatcy/controllers/provider/chat_view_provider.dart';
+import 'package:chatcy/controllers/services/LocalStorage/local_storage.dart';
 import 'package:chatcy/controllers/services/database_collection.dart';
-import 'package:chatcy/controllers/services/notification_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,13 +11,21 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:provider/provider.dart';
 
 import '../model/contacts_model.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 
 class SignUpController extends GetxController {
+  // SignUpController() {
+  //   callLogin();
+  // }
+  bool isSaved = false;
+  Future<void> callLogin() async {
+    isSaved = await LocalStorage.getIsLogin();
+    update();
+  }
+
   // XFile? image;
   RxString imagePath = "".obs;
   RxBool isLogInSeen = true.obs;
@@ -176,12 +183,15 @@ class SignUpController extends GetxController {
 
       ///upload to database
       await userDatabase.doc(docId).set(user.toMap());
+      await LocalStorage.saveIsLogin(true);
+      // FirebaseHelper.onUserLogin();
       Navigator.pushNamedAndRemoveUntil(
           context, RouteName.home, (route) => false);
+
       await setLoading(false);
     } on FirebaseException catch (e) {
       setLoading(false);
-      AppUtils.showFlushBar(context, e.message.toString());
+      AppUtilsChats.showFlushBar(context, e.message.toString());
       // print(e.message.toString());
     }
   }
@@ -195,12 +205,15 @@ class SignUpController extends GetxController {
       setLogInLoad(true);
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       setStatus("online", _auth.currentUser!.uid);
+      await LocalStorage.saveIsLogin(true);
+      // FirebaseHelper.onUserLogin();
       Navigator.pushNamedAndRemoveUntil(
           context, RouteName.home, (route) => false);
+
       setLogInLoad(false);
     } on FirebaseException catch (e) {
       setLogInLoad(false);
-      AppUtils.showFlushBar(context, e.message.toString());
+      AppUtilsChats.showFlushBar(context, e.message.toString());
       // print(e.message.toString());
     }
   }

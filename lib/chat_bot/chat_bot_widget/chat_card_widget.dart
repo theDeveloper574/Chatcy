@@ -69,7 +69,7 @@ class ChatCardWidget extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                AppUtils.internetDialog(context);
+                                AppUtilsChats.internetDialog(context);
                               }
                             },
                             style: ButtonStyle(

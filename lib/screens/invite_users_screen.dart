@@ -64,7 +64,7 @@ class _InviteUsersScreenState extends State<InviteUsersScreen> {
             ? ListView.builder(
                 itemCount: 12,
                 itemBuilder: (context, int index) {
-                  return AppUtils.showShimmer();
+                  return AppUtilsChats.showShimmer();
                 },
               )
             : searchList.isEmpty
@@ -74,7 +74,7 @@ class _InviteUsersScreenState extends State<InviteUsersScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       Contact contact = fetchContactsList[index];
                       Color color = colors[index % colors.length];
-                      return AppUtils.showMobileContactUtils(
+                      return AppUtilsChats.showMobileContactUtils(
                           // phoneNum: '',
                           onInvite: () async {
                             await launch(
@@ -102,7 +102,7 @@ class _InviteUsersScreenState extends State<InviteUsersScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       Contact contact = searchList[index];
                       Color color = colors[index % colors.length];
-                      return AppUtils.showMobileContactUtils(
+                      return AppUtilsChats.showMobileContactUtils(
                           // phoneNum: '',
                           onInvite: () async {
                             await launch(

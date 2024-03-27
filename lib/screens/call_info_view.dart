@@ -37,7 +37,7 @@ class CallInfoView extends StatelessWidget {
                     (route) => false);
               },
               child: const Icon(Icons.chat)),
-          AppUtils.sizedBox(0.0, 20.0),
+          AppUtilsChats.sizedBox(0.0, 20.0),
           // PopupMenuButton(
           //     padding: EdgeInsets.zero,
           //     constraints: const BoxConstraints.expand(width: 190, height: 110),
@@ -116,9 +116,9 @@ class CallInfoView extends StatelessWidget {
                   Icons.call,
                   size: 18,
                 ),
-                AppUtils.sizedBox(0.0, 12.0),
+                AppUtilsChats.sizedBox(0.0, 12.0),
                 Text(
-                  AppUtils.callHistoryTime(callDetail.dateTime!),
+                  AppUtilsChats.callHistoryTime(callDetail.dateTime!),
                 )
               ],
             ),

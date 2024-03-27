@@ -43,9 +43,9 @@ class CallInfoDetailAndProfileWidget extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AppUtils.sizedBox(0.0, 8),
+          AppUtilsChats.sizedBox(0.0, 8),
           audioCallWid,
-          AppUtils.sizedBox(0.0, 22),
+          AppUtilsChats.sizedBox(0.0, 22),
           videoCallWid
         ],
       ),

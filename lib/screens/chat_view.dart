@@ -118,7 +118,7 @@ class ChatView extends StatelessWidget {
                                       Text(
                                         (chatRoomModel.lastMessage == "")
                                             ? ""
-                                            : AppUtils
+                                            : AppUtilsChats
                                                 .firebaseTimestampSingleMsg(
                                                 chatRoomModel.chatTime!,
                                               ),

@@ -2,6 +2,7 @@
 library;
 
 import 'package:chatcy/controllers/provider/chat_view_provider.dart';
+import 'package:chatcy/controllers/services/firebase_helper_method.dart';
 import 'package:chatcy/screens/status_view.dart';
 import 'package:chatcy/widgets/check_call_widget.dart';
 import 'package:fast_contacts/fast_contacts.dart';
@@ -44,6 +45,9 @@ class _HomeViewState extends State<HomeView>
     data.myInfo();
     data.callHisoryId();
     data.getUserInfoPlus();
+    Future.delayed(const Duration(seconds: 3), () {
+      FirebaseHelper.onUserLogin(data.userInfo!.name.toString());
+    });
     _tabController =
         TabController(length: 3, vsync: this, initialIndex: widget.index ?? 0);
     _tabController!.addListener(() => _handleTabIndex());
@@ -65,6 +69,7 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ChatViewProvider>(context);
     return MaterialApp(
       home: PickupLayout(
         scaffold: Scaffold(

@@ -26,4 +26,5 @@ class RouteName {
   // static const String profileImageOpen = "profile_image_view_open";
   static const String newChatViewNotifi = "new_chat_view_notification";
   static const String deleteStatus = "delete_status_view";
+  static const String splash = "splash_view";
 }

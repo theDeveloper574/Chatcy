@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"
+        tools:targetApi="eclair" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -46,12 +47,15 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-              <meta-data
-                android:name="com.chatcy.default_notification_icon"
-                android:resource="@drawable/ic_launcher"/>
-                     <!-- <meta-data
-                android:name="com.chatcy.default_notification_icon"
-                android:resource="@drawable/ic_launcher"/> -->
+<!--              <meta-data-->
+<!--                android:name="com.chatcy.default_notification_icon"-->
+<!--                android:resource="@drawable/logo"/>-->
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/logo" />
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/white" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

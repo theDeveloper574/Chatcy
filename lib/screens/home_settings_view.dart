@@ -1,4 +1,5 @@
 import 'package:chatcy/controllers/provider/chat_view_provider.dart';
+import 'package:chatcy/controllers/services/LocalStorage/local_storage.dart';
 import 'package:chatcy/controllers/services/notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,8 @@ class HomeSettingsView extends StatelessWidget {
             onListTap: () {
               Navigator.pushNamed(context, RouteName.myProfileView);
             },
-            videoCallWid: AppUtils.sizedBox(0.0, 0.0),
-            audioCallWid: AppUtils.sizedBox(0.0, 0.0),
+            videoCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
+            audioCallWid: AppUtilsChats.sizedBox(0.0, 0.0),
             imageProvider: Hero(
               tag: "my-profile",
               child: Image.asset('asset/signup.png'),
@@ -50,7 +51,9 @@ class HomeSettingsView extends StatelessWidget {
                 await NotificationService.unSubscribeToTopic(
                   uid,
                 );
+                FirebaseHelper.onUserLogout();
                 provider.setModelTonul();
+                await LocalStorage.saveIsLogin(false);
                 await FirebaseHelper.setStatus("offline", uid);
                 FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pushNamedAndRemoveUntil(

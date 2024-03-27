@@ -1,3 +1,4 @@
+import 'package:chatcy/controllers/services/LocalStorage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,28 +43,29 @@ class _LogInViewState extends State<LogInView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppUtils.sizedBox(2, 0),
+            AppUtilsChats.sizedBox(2, 0),
             const CircleAvatar(
               radius: 80,
               backgroundImage: AssetImage('asset/app-logo.png'),
             ),
             // Image.asset('asset/app-logo.png'),
             //email controller
-            AppUtils.sizedBox(8, 0),
+            AppUtilsChats.sizedBox(8, 0),
             TextFormField(
               // focusNode: one,
               controller: email,
               cursorColor: AppColors.defaultColor,
               keyboardType: TextInputType.emailAddress,
-              decoration: AppUtils.decoration(
-                  hintTe: "Enter Email", widget: AppUtils.sizedBox(0.0, 0.0)),
+              decoration: AppUtilsChats.decoration(
+                  hintTe: "Enter Email",
+                  widget: AppUtilsChats.sizedBox(0.0, 0.0)),
               textInputAction: TextInputAction.next,
               // onFieldSubmitted: (val) {
               //   AppUtils.fieldFocusChange(context, one, two);
               // },
             ),
             //password controller
-            AppUtils.sizedBox(8, 0),
+            AppUtilsChats.sizedBox(8, 0),
             Obx(() {
               return TextFormField(
                 obscureText: logInController.isLogInSeen.value,
@@ -75,17 +77,20 @@ class _LogInViewState extends State<LogInView> {
                 cursorColor: AppColors.defaultColor,
                 onFieldSubmitted: (val) {
                   if (email.text.isEmpty) {
-                    AppUtils.showFlushBar(context, "Please Enter Name");
+                    AppUtilsChats.showFlushBar(context, "Please Enter Name");
                   } else if (email.text.isEmpty) {
-                    AppUtils.showFlushBar(context, "Please Enter Email");
+                    AppUtilsChats.showFlushBar(context, "Please Enter Email");
                   } else if (!email.text.contains("@")) {
-                    AppUtils.showFlushBar(context, "Please Enter Valid Email");
+                    AppUtilsChats.showFlushBar(
+                        context, "Please Enter Valid Email");
                   } else if (!email.text.contains(".")) {
-                    AppUtils.showFlushBar(context, "Please Enter Valid Email");
+                    AppUtilsChats.showFlushBar(
+                        context, "Please Enter Valid Email");
                   } else if (password.text.isEmpty) {
-                    AppUtils.showFlushBar(context, "Please Enter Password");
+                    AppUtilsChats.showFlushBar(
+                        context, "Please Enter Password");
                   } else if (password.text.length < 6) {
-                    AppUtils.showFlushBar(
+                    AppUtilsChats.showFlushBar(
                         context, "Password cannot be less than six");
                   } else {
                     logInController.signInUser(
@@ -96,7 +101,7 @@ class _LogInViewState extends State<LogInView> {
                     password.clear();
                   }
                 },
-                decoration: AppUtils.decoration(
+                decoration: AppUtilsChats.decoration(
                     hintTe: "Enter Password",
                     widget: GestureDetector(
                       onTap: () {
@@ -113,25 +118,26 @@ class _LogInViewState extends State<LogInView> {
               );
             }),
             //submit button
-            AppUtils.sizedBox(18, 0),
+            AppUtilsChats.sizedBox(18, 0),
             Obx(() {
               return ButtonCompo(
                   isLoading: logInController.isLogin.value,
                   onPress: () {
                     if (email.text.isEmpty) {
-                      AppUtils.showFlushBar(context, "Please Enter Name");
+                      AppUtilsChats.showFlushBar(context, "Please Enter Name");
                     } else if (email.text.isEmpty) {
-                      AppUtils.showFlushBar(context, "Please Enter Email");
+                      AppUtilsChats.showFlushBar(context, "Please Enter Email");
                     } else if (!email.text.contains("@")) {
-                      AppUtils.showFlushBar(
+                      AppUtilsChats.showFlushBar(
                           context, "Please Enter Valid Email");
                     } else if (!email.text.contains(".")) {
-                      AppUtils.showFlushBar(
+                      AppUtilsChats.showFlushBar(
                           context, "Please Enter Valid Email");
                     } else if (password.text.isEmpty) {
-                      AppUtils.showFlushBar(context, "Please Enter Password");
+                      AppUtilsChats.showFlushBar(
+                          context, "Please Enter Password");
                     } else if (password.text.length < 6) {
-                      AppUtils.showFlushBar(
+                      AppUtilsChats.showFlushBar(
                           context, "Password cannot be less than six");
                     } else {
                       FocusScope.of(context).unfocus();
@@ -145,7 +151,7 @@ class _LogInViewState extends State<LogInView> {
                   },
                   buttonName: "Log In");
             }),
-            AppUtils.sizedBox(6, 0),
+            AppUtilsChats.sizedBox(6, 0),
             CheckAccountCompo(
                 accountDesc: "Don't have an account?",
                 onTap: () {

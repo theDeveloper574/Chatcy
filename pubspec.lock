@@ -1081,7 +1081,7 @@ packages:
     source: hosted
     version: "3.3.1"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: "81429e4481e1ccfb51ede496e916348668fd0921627779233bd24cc3ff6abd02"
@@ -1433,18 +1433,18 @@ packages:
     dependency: transitive
     description:
       name: zego_uikit
-      sha256: "6ed02130044c0d56c59d4ec3870045b4323e8373cba2053b4046574622161121"
+      sha256: "5425c3492485f573fc26512636783471a76d192d9ebedc0f3d776b95e7df3790"
       url: "https://pub.dev"
     source: hosted
-    version: "2.18.8"
+    version: "2.19.0"
   zego_uikit_prebuilt_call:
     dependency: "direct main"
     description:
       name: zego_uikit_prebuilt_call
-      sha256: "6db06bdfa793f92d3fadd1f9c2428560c3697cbfd7e4158500d5ad5666b90b98"
+      sha256: "25846dedf33b156692320900f6763ef8fb31440ff4419f09b3af8f7665e55940"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.2"
+    version: "4.5.0"
   zego_uikit_signaling_plugin:
     dependency: "direct main"
     description:
