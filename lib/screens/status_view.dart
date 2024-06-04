@@ -336,7 +336,7 @@ class _StatusViewState extends State<StatusView> {
     return GestureDetector(
       onTap: onStoryTap,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 34.0, left: 14.0),
+        padding: const EdgeInsets.only(bottom: 34.0, left: 14.0, right: 14.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

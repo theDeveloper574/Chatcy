@@ -1063,7 +1063,7 @@ class AppUtilsChats {
           width: 80,
         ),
         content: const Text(
-          "PLEASE CHECK YOUR INTERNET CONNECTION NOT FOUND.",
+          "PLEASE CHECK YOUR INTERNET CONNECTION.",
           textAlign: TextAlign.center,
         ),
         actions: [

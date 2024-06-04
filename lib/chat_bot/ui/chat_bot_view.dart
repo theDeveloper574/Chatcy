@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'package:chatcy/res/colors.dart';
+import 'package:chatcy/utils/utils.dart';
 import 'package:chatcy/widgets/text_dot_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+import '../../controllers/provider/chat_view_provider.dart';
 
 class ChatUiBotPage extends StatefulWidget {
   const ChatUiBotPage({super.key});
@@ -18,6 +23,12 @@ class _ChatUiBotPageState extends State<ChatUiBotPage> {
   final TextEditingController _chatController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   List<Map<String, dynamic>> _chatHistory = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    _chatHistory.clear();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,20 +155,27 @@ class _ChatUiBotPageState extends State<ChatUiBotPage> {
                   width: 4.0,
                 ),
                 MaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      if (_chatController.text.isNotEmpty) {
-                        // sendMessage();
-                        _chatHistory.add({
-                          "time": DateTime.now(),
-                          "message": _chatController.text,
-                          "isSender": true,
-                        });
-                        _chatController.clear();
-                      }
-                    });
-                    scrollToEnd();
-                    // getAnswer();
+                  onPressed: () async {
+                    ///check internet connection
+                    final chatPro =
+                        Provider.of<ChatViewProvider>(context, listen: false);
+                    bool isNetOn = await chatPro.hasNetwork();
+                    if (isNetOn) {
+                      setState(() {
+                        if (_chatController.text.isNotEmpty) {
+                          // sendMessage();
+                          _chatHistory.add({
+                            "time": DateTime.now(),
+                            "message": _chatController.text,
+                            "isSender": true,
+                          });
+                          _chatController.clear();
+                        }
+                      });
+                      scrollToEnd();
+                    } else {
+                      AppUtilsChats.internetDialog(context);
+                    }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(80.0)),
@@ -209,38 +227,24 @@ class _ChatUiBotPageState extends State<ChatUiBotPage> {
       "topK": 1
     };
     isWaiting = true;
-
     final response = await http.post(uri, body: jsonEncode(request));
-    // print('res called');
-    // print(response.body);
-    setState(() {
-      _chatHistory.add({
-        "time": DateTime.now(),
-        "message": json.decode(response.body)["candidates"][0]["content"],
-        "isSender": false,
+    if (response.statusCode == 200) {
+      setState(() {
+        _chatHistory.add({
+          "time": DateTime.now(),
+          "message": json.decode(response.body)["candidates"][0]["content"],
+          "isSender": false,
+        });
       });
-    });
-    isWaiting = false;
-    // _scrollController.jumpTo(
-    //   _scrollController.position.maxScrollExtent,
-    // );
+      isWaiting = false;
+    } else {
+      Get.snackbar("ChatCY", response.body);
+    }
   }
 
   void scrollToEnd() {
-    // Your logic to send a message...
-
-    // After updating _chatHistory, scroll to the bottom of the list
-
     getAnswer();
     scrollToBottom(_scrollController);
-    // if (_scrollController.hasClients) {
-    //   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    // }
-    // _scrollController.animateTo(
-    //   _scrollController.position.maxScrollExtent,
-    //   duration: const Duration(seconds: 0),
-    //   curve: Curves.easeOut,
-    // );
   }
 
   Future scrollToBottom(ScrollController scrollController) async {

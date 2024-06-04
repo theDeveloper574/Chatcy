@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView>
               return <Widget>[
                 SliverAppBar(
                   title: Text(
-                    "MaanApp",
+                    "Man",
                     style: TextStyle(color: AppColors.whiteColor),
                   ),
                   centerTitle: false,
