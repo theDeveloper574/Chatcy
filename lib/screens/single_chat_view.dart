@@ -508,11 +508,12 @@ class _SingleChatViewState extends State<SingleChatView> {
                 int count = chatProvider.countChk!;
                 int increseCount = count + 1;
                 FirebaseHelper.sendMessage(
-                    senderName: chatProvider.userInfo!.name.toString(),
-                    message: message,
-                    chatRoom: widget.chatRoom!,
-                    userID: widget.userID,
-                    fromCount: increseCount);
+                  senderName: chatProvider.userInfo!.name.toString(),
+                  message: message,
+                  chatRoom: widget.chatRoom!,
+                  userID: widget.userID,
+                  fromCount: increseCount,
+                );
               }
             },
             attachFile: () async {
@@ -529,16 +530,19 @@ class _SingleChatViewState extends State<SingleChatView> {
               ].request();
               if (!mounted) return;
               imageCon.pickImageGall(
-                  context: context,
-                  onSendMethod: () async {
-                    Navigator.pop(context);
-                    imageCon.sendImageMessage();
-                    Future.delayed(const Duration(), () async {
+                context: context,
+                onSendMethod: () async {
+                  Navigator.pop(context);
+                  imageCon.sendImageMessage();
+                  Future.delayed(
+                    const Duration(),
+                    () async {
                       UploadTask uploadTask = chatImages.putFile(
-                          File(imageCon.imgPath.value),
-                          SettableMetadata(
-                            contentType: "image/jpeg",
-                          ));
+                        File(imageCon.imgPath.value),
+                        SettableMetadata(
+                          contentType: "image/jpeg",
+                        ),
+                      );
                       TaskSnapshot snapshot = await uploadTask;
                       var profileDown = await snapshot.ref.getDownloadURL();
                       var uid = FirebaseAuth.instance.currentUser!.uid;
@@ -546,26 +550,28 @@ class _SingleChatViewState extends State<SingleChatView> {
                       int count1 = count + 1;
                       if (widget.chatRoom!.toId == uid) {
                         FirebaseHelper.sendImage(
-                            senderName: chatProvider.userInfo!.name.toString(),
-                            imagePath: profileDown,
-                            text: messageImageCon.text.isEmpty
-                                ? ""
-                                : messageImageCon.text.trim(),
-                            chatRoom: widget.chatRoom!,
-                            userID: widget.userID,
-                            fromCount: count1);
+                          senderName: chatProvider.userInfo!.name.toString(),
+                          imagePath: profileDown,
+                          text: messageImageCon.text.isEmpty
+                              ? ""
+                              : messageImageCon.text.trim(),
+                          chatRoom: widget.chatRoom!,
+                          userID: widget.userID,
+                          fromCount: count1,
+                        );
                       } else {
                         int count = chatProvider.countChk!;
                         int increseCount = count + 1;
                         FirebaseHelper.sendImage(
-                            senderName: chatProvider.userInfo!.name.toString(),
-                            imagePath: profileDown,
-                            text: messageImageCon.text.isEmpty
-                                ? ""
-                                : messageImageCon.text.trim(),
-                            chatRoom: widget.chatRoom!,
-                            userID: widget.userID,
-                            fromCount: increseCount);
+                          senderName: chatProvider.userInfo!.name.toString(),
+                          imagePath: profileDown,
+                          text: messageImageCon.text.isEmpty
+                              ? ""
+                              : messageImageCon.text.trim(),
+                          chatRoom: widget.chatRoom!,
+                          userID: widget.userID,
+                          fromCount: increseCount,
+                        );
                       }
                       // FirebaseHelper.sendImage(
                       //     senderName: widget.userName,
@@ -576,9 +582,11 @@ class _SingleChatViewState extends State<SingleChatView> {
                       //     chatRoom: widget.chatRoom!,
                       //     userID: widget.userID,fromCount: );
                       imageCon.setSendImg(false);
-                    });
-                  },
-                  controller: messageImageCon);
+                    },
+                  );
+                },
+                controller: messageImageCon,
+              );
             },
             emojiPickWid: GestureDetector(
               onTap: () {
@@ -608,10 +616,11 @@ class _SingleChatViewState extends State<SingleChatView> {
                 int count = widget.chatRoom!.fromMessagesCount!;
                 int count1 = count + 1;
                 UploadTask uploadTask = chatVoice.putFile(
-                    File(file.path),
-                    SettableMetadata(
-                      contentType: "audio/wav",
-                    ));
+                  File(file.path),
+                  SettableMetadata(
+                    contentType: "audio/wav",
+                  ),
+                );
                 TaskSnapshot snapshot = await uploadTask;
                 var profileDown = await snapshot.ref.getDownloadURL();
                 // await sendVoice(profileDown);
