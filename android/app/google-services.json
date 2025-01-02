@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "479785137590",
-    "project_id": "chatcy-4d8b4",
-    "storage_bucket": "chatcy-4d8b4.appspot.com"
+    "project_number": "2423423882823423",
+    "project_id": "chatcy-hwer3344",
+    "storage_bucket": "chatcy-34345.werwer.wrwe"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:479785137590:android:f5a99d69af1d92ba7ebd17",
+        "mobilesdk_app_id": "283948234klnsdfhihwer",
         "android_client_info": {
           "package_name": "com.chatcy"
         }
@@ -15,7 +15,6 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBNnuR_g01EUPc85yLS4h7vyGj3TujQX1k"
         }
       ],
       "services": {
