@@ -52,44 +52,4 @@ class DefaultFirebaseOptions {
         );
     }
   }
-
-  // static const FirebaseOptions web = FirebaseOptions(
-  //   apiKey: 'AIzaSyCQrHDmcRNpUD9oM1vbWcJOhe3UpnDobAw',
-  //   appId: '1:136243913230:web:d4455cb417ee63d82d125f',
-  //   messagingSenderId: '136243913230',
-  //   projectId: 'workapp-d4e73',
-  //   authDomain: 'workapp-d4e73.firebaseapp.com',
-  //   storageBucket: 'workapp-d4e73.appspot.com',
-  //   measurementId: 'G-XY1WXQKYCW',
-  // );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBNnuR_g01EUPc85yLS4h7vyGj3TujQX1k',
-    appId: '1:479785137590:android:f5a99d69af1d92ba7ebd17',
-    messagingSenderId: '479785137590',
-    projectId: 'chatcy-4d8b4',
-    storageBucket: 'chatcy-4d8b4.appspot.com',
-  );
-
-  // static const FirebaseOptions ios = FirebaseOptions(
-  //   apiKey: 'AIzaSyCjC9JJzxzbNGR5vyvLMO-wNXXuo5WWS7k',
-  //   appId: '1:136243913230:ios:f5e1dff239e89d002d125f',
-  //   messagingSenderId: '136243913230',
-  //   projectId: 'workapp-d4e73',
-  //   storageBucket: 'workapp-d4e73.appspot.com',
-  //   iosClientId:
-  //       '136243913230-ejk1c191rqno18m4ceh1uk2kfh5ner35.apps.googleusercontent.com',
-  //   iosBundleId: 'com.maanapp.maanaap',
-  // );
-
-  // static const FirebaseOptions macos = FirebaseOptions(
-  //   apiKey: 'AIzaSyCjC9JJzxzbNGR5vyvLMO-wNXXuo5WWS7k',
-  //   appId: '1:136243913230:ios:f5e1dff239e89d002d125f',
-  //   messagingSenderId: '136243913230',
-  //   projectId: 'workapp-d4e73',
-  //   storageBucket: 'workapp-d4e73.appspot.com',
-  //   iosClientId:
-  //       '136243913230-ejk1c191rqno18m4ceh1uk2kfh5ner35.apps.googleusercontent.com',
-  //   iosBundleId: 'com.maanapp.maanaap',
-  // );
 }
